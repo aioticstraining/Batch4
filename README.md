@@ -2,5 +2,5 @@
 
 Collaborate on Batch 4 activities
 
-My initial change2
+My initial change ready for release
 
