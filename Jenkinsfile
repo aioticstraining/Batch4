@@ -14,6 +14,10 @@ pipeline {
             steps {
                 echo '🧪 Running Unit Tests...'
                 bat 'ping 127.0.0.1 -n 3 > nul'
+                
+                // --- NEGATIVE SCENARIO INJECTION: Uncomment the line below to fail the build ---
+                // error 'Test Results: 15% Failed. Aborting build due to low test coverage.'
+                
                 echo 'Test Results: 100% Pass.'
             }
         }
@@ -22,6 +26,10 @@ pipeline {
             steps {
                 echo '🔍 Scanning for Code Quality...'
                 bat 'ping 127.0.0.1 -n 5 > nul'
+                
+                // --- NEGATIVE SCENARIO INJECTION: Uncomment the line below to fail the build ---
+                // error 'SonarQube: Quality Gate FAILED ❌ (Security Vulnerabilities Found)'
+                
                 echo 'SonarQube: Quality Gate PASSED ✅'
             }
         }
@@ -29,7 +37,6 @@ pipeline {
         stage('Integration Tests') {
             steps {
                 echo '🔗 Running Integration Tests against Mock DB...'
-                // Simulated longer delay for integration tests
                 bat 'ping 127.0.0.1 -n 6 > nul'
                 echo 'Integration Tests: Successful.'
             }
@@ -61,6 +68,14 @@ pipeline {
             Tests: OK
             Sonar: OK
             Deploy: OK
+            ****************************************************
+            """
+        }
+        failure {
+            echo """
+            ****************************************************
+            ALERT: Pipeline Failed!
+            Check the stage logs above to identify the issue.
             ****************************************************
             """
         }
